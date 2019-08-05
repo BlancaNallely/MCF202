@@ -28,3 +28,18 @@ boxplot(diametro, horizontal = TRUE, col = "lightblue", main="Diametro",
         xlab="D (cm)")
 
 
+# #Restricciones ----------------------------------------------------------
+
+sum(Db_alturas$crecimiento < mean(DB_alturas$crecimiento))
+
+#Excluir el Tratamiento A
+Trat_A <- DB_alturas[!(DB_altura$tratamiento == "TA"),]
+
+mean(Trat_A$crecimiento)
+
+
+# Submuestra --------------------------------------------------------------
+
+T.mean <- subset(DB_alturas, crecimiento >= mean(DB_alturas$crecimiento)
+boxplot(T.mean$crecimiento ~ T.mean$tratamiento)                 
+
