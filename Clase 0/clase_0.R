@@ -21,3 +21,10 @@ median(diametro)
 #Medidas de dispersión
 sd(diametro)
 var(diametro)
+
+# Gráficas ----------------------------------------------------------------
+
+boxplot(diametro, horizontal = TRUE, col = "lightblue", main="Diametro",
+        xlab="D (cm)")
+
+
