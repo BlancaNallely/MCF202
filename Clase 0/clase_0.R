@@ -30,9 +30,23 @@ boxplot(diametro, horizontal = TRUE, col = "lightblue", main="Diametro",
         xlab="D (cm)")
 
 
-# #Restricciones ----------------------------------------------------------
+# Importado excel actvividad 1---------------------------------------------------------
 
-sum(Db_alturas$crecimiento < mean(DB_alturas$crecimiento))
+DB_alturas <- read.csv("c:/MCF202-2019/Datos/alturas.csv", header = T)
+head(DB_alturas)
+boxplot(DB_alturas$crecimiento)
+boxplot(DB_alturas$crecimiento ~ DB_alturas$tratamiento,
+        col= "ligthgreen",
+        xlab= "Tratamientos",
+        ylab= "crecimiento (cm)",
+        main= "Efectos del fertilizante")
+
+mean(DB_alturas$crecimiento)
+
+
+#Restricciones ----------------------------------------------------------
+
+sum(DB_alturas$crecimiento < mean(DB_alturas$crecimiento))
 
 #Excluir el Tratamiento A
 Trat_A <- DB_alturas[!(DB_altura$tratamiento == "TA"),]
