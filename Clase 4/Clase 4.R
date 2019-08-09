@@ -2,6 +2,8 @@
 #09/08/2019
 #Clase 4
 
+# Correlación -------------------------------------------------------------
+
 library(repmis)
 erupciones <- source_data("https://dl.dropboxusercontent.com/s/liir6sil7hkqlxs/erupciones.csv")
 
@@ -25,6 +27,71 @@ cor.test(erupciones$eruptions, erupciones$waiting)
 #Si hay una correlacion 
 #La correlacion es significativa porque esta por debajo de 0.05 por lo cual se acepta H1
 
+
+# Regresión Lineal  -------------------------------------------------------
+
+#Hipotesis general: Que el tiempo de espera nos ayudara a predecir la duracion de la
+#proxima erupcion del geyser Old Faithfull.
+
+#H0= no es significativa para la predicción.
+#H1= si es significativa para predecir.
+
+#Comando "ml" para realizar la regresión
+lm.erup <- lm(erupciones$eruptions ~ erupciones$waiting)
+
+#Grafica
+plot(erupciones$waiting, erupciones$eruptions, pch= 19, col= "blue",
+     xlab = "Tiempo de espera (min)",
+     ylab = "Duración en (min")
+
+abline(lm.erup, col= "green")
+
+text(52, 4.5, "Y = -1.87 + 0.07*x")
+text(52, 4, "r^2 = 0.81")
+
+lm.erup
+summary(lm.erup)
+
+length(erupciones$eruptions)
+
+sqrt(0.90)
+(0.90)^2
+
+#Para saber la duración en tiempo de espera de 60 min
+y.60 <- -1.87 + 0.07*60
+y.60
+
+
+# Datos de regresión ------------------------------------------------------
+
+espera <-erupciones$waiting
+duracion <- erupciones$eruptions
+
+res <- resid(lm.erup)
+res
+sum(res)
+
+pre <- fitted(lm.erup)
+res.2 <- res^2
+
+cuadro <- round(data.frame(espera, duracion, pre, res,
+                           res.2),4)
+SSE <- sum(cuadro$res.2)
+SSE
+
+SSE <- sum((duracion - pre)^2)                
+SSE
+
+vari <- SSE/(length(erupciones$waiting)-2)
+vari                               
+ 
+# Prueba de hipotesis de la regresión -------------------------------------
+
+an.erup <- anova(lm.erup)
+an.erup
+
+#aceptamos la hiotesis alternativa que el modelo de regresion aplicado son 
+#significativos, entonces podemos decir que la regresión se puede aplicar.
 
 # Ejercicio 2 -------------------------------------------------------------
 
@@ -63,4 +130,6 @@ cor.test(ebanos$diametro, ebanos$altura)
 #Deacuerdo a la prueba de correlacion aceptamos la hipotesis alternativa H1
 #la cual nos indica que si hay diferencias significativas en los datos de diametro
 #y altura ya que el p-value nos da un valor de 2.2e-16 que es menor al alfa de 0.05.
+
+
 
